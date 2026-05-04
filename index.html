@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Figma</title>
     <!-- Lato font -->
     <link href="fonts/stylesheet.css" rel="stylesheet" type="text/css" />
@@ -25,6 +27,9 @@
                     </a>
                 </div>
                 <nav>
+                    <div class="menu-close" onclick="toggleMenu()">
+                        <i class="ri-close-line"></i>
+                    </div>
                     <ul class="d-flex">
                         <li><a href="javascript:void(0)">HOME</a></li>
                         <li class="dropdown">
@@ -53,6 +58,9 @@
                         <li><a href="javascript:void(0)">CONTACT</a></li>
                     </ul>
                 </nav>
+                <div class="menu-toggle" onclick="toggleMenu()">
+                    <i class="ri-menu-line"></i>
+                </div>
                 <div class="social">
                     <a href="javascript:void(0)"><i class="ri-search-line"></i></a>
                     <a href="javascript:void(0)"><i class="ri-user-line"></i></a>
@@ -389,13 +397,61 @@
             </div>
 
             <div class="footer-link text-center">
-                <a href="javascript:void(0)">Copyright © 2023 GoodLayers. All Rights Reserved.</a>
+                <a href="javascript:void(0)">Copyright 2023 GoodLayers. All Rights Reserved.</a>
             </div>
 
         </section>
 
 
     </footer>
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const nav = document.querySelector('nav');
+            nav.classList.toggle('active');
+            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Dropdown Toggle for Mobile
+        document.querySelectorAll('.dropdown > a').forEach(dropdown => {
+            dropdown.addEventListener('click', function (e) {
+                if (window.innerWidth <= 767) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function (e) {
+            const nav = document.querySelector('nav');
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (!nav.contains(e.target) && !menuToggle.contains(e.target)) {
+                nav.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Back to Top Button Visibility on Scroll
+        const backToTopBtn = document.querySelector('.back-to-up');
+
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Smooth scroll for back to top
+        backToTopBtn.querySelector('a').addEventListener('click', function (e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 
 </html>
